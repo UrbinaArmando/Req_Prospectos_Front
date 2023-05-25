@@ -1,0 +1,94 @@
+<div class="container mt-3">
+    <h2 class="text-center mb-3"> Captura nuevo prospecto</h2>
+    <form [formGroup]="prospectForm" (ngSubmit)="handleSubmit()">
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="name" formControlName="name">
+                    <div class="text-danger" *ngIf="prospectForm.get('name')?.hasError('required') ">
+                        <span>Requerido</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="lastname1" class="form-label">Apellido Paterno</label>
+                    <input type="text" class="form-control" id="lastName1" formControlName="lastName1">
+                    <div class="text-danger" *ngIf="prospectForm.get('lastName1')?.hasError('required') ">
+                        <span>Requerido</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="lastname2" class="form-label">Apellido Materno</label>
+                    <input type="text" class="form-control" id="lastname2" formControlName="lastName2">
+                </div>
+                <div class="mb-3">
+                    <label for="street" class="form-label">Calle</label>
+                    <input type="text" class="form-control" id="street" formControlName="street">
+                    <div class="text-danger" *ngIf="prospectForm.get('street')?.hasError('required') ">
+                        <span>Requerido</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="number" class="form-label">Numero</label>
+                    <input type="text" class="form-control" id="number" formControlName="number">
+                    <div class="text-danger" *ngIf="prospectForm.get('number')?.hasError('required') ">
+                        <span>Requerido</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="colonia" class="form-label">Colonia</label>
+                    <input type="text" class="form-control" id="colonia" formControlName="colonia">
+                    <div class="text-danger" *ngIf="prospectForm.get('colonia')?.hasError('required') ">
+                        <span>Requerido</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="postalCode" class="form-label">Codigo postal</label>
+                    <input type="text" class="form-control" id="postalCode" formControlName="postalCode">
+                    <div class="text-danger" *ngIf="prospectForm.get('postalCode')?.hasError('required') ">
+                        <span>Requerido</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" id="phone" formControlName="phone">
+                    <div class="text-danger" *ngIf="prospectForm.get('phone')?.hasError('required') ">
+                        <span>Requerido</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="rfc" class="form-label">RFC</label>
+                    <input type="text" class="form-control" id="rfc" formControlName="rfc">
+                    <div class="text-danger" *ngIf="prospectForm.get('rfc')?.hasError('required') ">
+                        <span>Requerido</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="prospectForm.invalid">Enviar</button>
+        <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Salir</button>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">¿Seguro que desea salir?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Perdera todo el progreso
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        (click)="handleExit()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

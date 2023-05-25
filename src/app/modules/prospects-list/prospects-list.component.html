@@ -1,0 +1,169 @@
+<div class="container">
+    <h2 class="text-center">Lista de Prospectos</h2>
+    <table class="table table-striped">
+        <caption>Lista de Prospectos</caption>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Primer apellido</th>
+                <th scope="col">Segundo apellido</th>
+                <th scope="col">Estatus</th>
+                <th scope="col">Info</th>
+                <th scope="col">Evaluar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let prospect of prospectsList">
+                <td>{{prospect.id}}</td>
+                <td>{{prospect.name}}</td>
+                <td>{{prospect.lastName1}}</td>
+                <td>{{prospect.lastName2}}</td>
+                <td>{{prospect.status}}</td>
+                <td>
+                    <button (click)="setIndex(prospect.id, 'Informacion del prospecto')" type="button"
+                        class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsModal">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </button>
+                </td>
+                <td>
+                    <button (click)="setIndex(prospect.id, 'Evaluar prospecto')" type="button"
+                        [disabled]="prospect.status != 'Enviado'" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#detailsModal">
+                        <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="detailsModalLabel">{{modalHeader}}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="updateStatusForm" (ngSubmit)="handleSubmit()">
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Nombre</div>
+                                    {{currentRecord().name}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Apellido Materno</div>
+                                    {{currentRecord().lastName1}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Apellido Paterno</div>
+                                    {{currentRecord().lastName2}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Calle</div>
+                                    {{currentRecord().street}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Numero</div>
+                                    C{{currentRecord().number}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Colonia</div>
+                                    {{currentRecord().colonia}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Codigo postal</div>
+                                    {{currentRecord().postalCode}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Telefono</div>
+                                    {{currentRecord().postalCode}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">RFC</div>
+                                    {{currentRecord().postalCode}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto"
+                                    *ngIf="currentRecord().status != 'Enviado'; else selectStatus">
+                                    <div class="fw-bold">Estatus</div>
+                                    {{currentRecord().status}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                                <ng-template class="ms-2 me-auto" #selectStatus>
+                                    <select class="form-select w-75" aria-label="Default select example"
+                                        formControlName="status">
+                                        <option selected>Seleccionar estatus</option>
+                                        <option value="Aceptado">Aceptar</option>
+                                        <option value="Rechazado">Rechazar</option>
+                                    </select>
+                                </ng-template>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto" *ngIf="currentRecord().status != 'Enviado'; else comments">
+                                    <div class="fw-bold">Observaciones</div>
+                                    {{currentRecord().comments}}
+                                </div>
+                                <span class="badge bg-primary rounded-pill"><i class="fa fa-bars"
+                                        aria-hidden="true"></i></span>
+                            </li>
+                            <ng-template class="ms-2 me-auto" #comments>
+                                <div class="form-floating w-75">
+                                    <input type="text" class="form-control" placeholder="Escribe aqui"
+                                        id="floatingTextarea" formControlName="comments">
+                                    <label for="floatingTextarea">Escribe el motivo</label>
+                                </div>
+                            </ng-template>
+                        </ol>
+                        <button *ngIf="modalHeader == 'Evaluar prospecto'" type="submit"
+                            class="btn btn-primary float-end" data-bs-dismiss="modal">Guardar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">s
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
